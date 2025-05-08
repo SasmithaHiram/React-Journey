@@ -1,15 +1,18 @@
 function ListGroup() {
-  const items = ["Sri Lanka", "India", "New York", "Canada"];
+  let items = ["Sri Lanka", "India", "New York", "Canada"];
+  items = [];
 
   return (
     <>
-      <h1>List Group</h1>
       <ul className="list-group">
         <li className="list-group-item active" aria-current="true">
           Countries
         </li>
+        {items.length === 0 ? <p>Not Found</p> : null}
         {items.map((item) => (
-          <li className="list-group-item">{item}</li>
+          <li className="list-group-item" key={item}>
+            {item}
+          </li>
         ))}
       </ul>
     </>
