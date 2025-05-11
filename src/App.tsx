@@ -2,13 +2,15 @@ import { useState } from "react";
 import Button from "./components/Button";
 
 function App() {
-  const [drink, setDrink] = useState({
-    title: "Americano",
-    price: 5,
-  });
-
+const [customer, setCustomer] = useState({
+  name: "Sasmitha",
+  address: {
+    city: "Kiribathgoda",
+    zipCode: "1234"
+  }
+})
   const handleClick = () => {
-    setDrink({ ...drink, price: 6 });
+    setCustomer({...customer, address: {...customer.address, zipCode: "11640"}})
   };
 
   return (
