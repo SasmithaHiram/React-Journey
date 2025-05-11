@@ -12,7 +12,7 @@ function ListGroup({ items, heading, onSelectItem }: Props) {
 
   return (
     <>
-      <ul className={styles.listGroup}>
+      <ul className={[styles.listGroup, styles.container].join(" ")}>
         <li className="list-group-item" aria-current="true">
           {heading}
         </li>
