@@ -1,4 +1,5 @@
 import { useState } from "react";
+import styles from "./ListGroup.module.css";
 
 interface Props {
   items: string[];
@@ -11,7 +12,7 @@ function ListGroup({ items, heading, onSelectItem }: Props) {
 
   return (
     <>
-      <ul className="list-group">
+      <ul className={styles.listGroup}>
         <li className="list-group-item" aria-current="true">
           {heading}
         </li>
