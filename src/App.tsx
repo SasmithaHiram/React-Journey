@@ -1,15 +1,21 @@
-import ListGroup from "./components/ListGroup";
+import { useState } from "react";
+import Button from "./components/Button";
 
 function App() {
-  const items = ["Sri Lanka", "India", "New York"];
+  const [drink, setDrink] = useState({
+    title: "Americano",
+    price: 5,
+  });
+
+  const handleClick = () => {
+    setDrink({ ...drink, price: 6 });
+  };
 
   return (
     <div>
-      <ListGroup
-        heading="Countries"
-        items={items}
-        onSelectItem={() => console.log(items)}
-      ></ListGroup>
+      <Button color="primary" onClick={handleClick}>
+        Click Me
+      </Button>
     </div>
   );
 }
