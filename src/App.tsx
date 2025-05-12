@@ -1,38 +1,21 @@
-import { useState } from "react";
-import Button from "./components/Button";
+import Expandable from "./components/Expandable";
 
 function App() {
-  const [cart, setCart] = useState({
-    discount: 0.1,
-    items: [
-      {
-        id: 1,
-        title: "Product 1",
-        qty: 1,
-      },
-      {
-        id: 2,
-        title: "Product 2",
-        qty: 2,
-      },
-    ],
-  });
-
-  const handleClick = () => {
-    setCart({
-      ...cart,
-      items: cart.items.map((item) =>
-        item.id === 1 ? { ...item, qty: item.qty + 1 } : item
-      ),
-    });
-  };
-  console.log(cart);
-
   return (
     <div>
-      <Button onQty={handleClick} color="primary">
-        Add QTY
-      </Button>
+      <Expandable>
+        Lorem ipsum dolor sit amet, consectetur adipisicing elit. Distinctio,
+        sequi vero debitis ipsum dolorum culpa quia eum pariatur aliquam
+        suscipit, placeat enim dolor velit veniam veritatis deserunt ea quam
+        natus nesciunt sint dolorem provident! Architecto, soluta. Mollitia
+        rerum tempore, saepe consequatur labore, eos expedita quibusdam ducimus
+        fuga pariatur numquam ullam provident, nam laborum? Eos natus fugiat cum
+        aliquam? Nisi, architecto magnam. Tempore maxime repellendus officia
+        iste, sit voluptatum ipsa, distinctio facilis ducimus molestias culpa
+        tenetur cum repellat doloribus mollitia dolore velit possimus sunt.
+        Ipsam officia inventore iusto in, praesentium magnam placeat alias,
+        natus nobis dicta magni quis, possimus blanditiis quaerat.
+      </Expandable>
     </div>
   );
 }
