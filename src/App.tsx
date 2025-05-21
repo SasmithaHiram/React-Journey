@@ -1,45 +1,35 @@
 import { useEffect, useState } from "react";
 import ApiClient, { CanceledError } from "./Services/Api-Client";
 import type { AxiosError } from "axios";
+import UserService, { type User } from "./Services/UserService";
 
-interface User {
-  id: number;
-  name: string;
-}
 const App = () => {
   const [users, setUsers] = useState<User[]>([]);
   const [error, setError] = useState("");
   const [isLoading, setLoading] = useState(false);
 
   useEffect(() => {
-    const controller = new AbortController();
-    const fetchUsers = async () => {
-      setLoading(true);
-      try {
-        const res = await ApiClient.get<User[]>(
-          "https://jsonplaceholder.typicode.com/users",
-          {
-            signal: controller.signal,
-          }
-        ).then((res) => {
-          setUsers(res.data);
-          setLoading(false);
-        });
-      } catch (err) {
+    setLoading(true);
+    const { request, cancel } = UserService.getAllUsers();
+    request
+      .then((res) => {
+        setUsers(res.data);
+        setLoading(false);
+      })
+
+      .catch((err) => {
         if (err instanceof CanceledError) return;
         setError((err as AxiosError).message);
         setLoading(false);
-      }
-    };
-
-    fetchUsers();
+      });
+    return () => cancel();
   }, []);
 
   const deleteUser = (user: User) => {
     const originalUsers = [...users];
     setUsers(users.filter((u) => u.id !== user.id));
 
-    ApiClient.delete("/users/" + user.id).catch((err) => {
+    UserService.deleteUser(user.id).catch((err) => {
       setError(err.message);
       setUsers(originalUsers);
     });
@@ -50,7 +40,7 @@ const App = () => {
     const newUser = { id: 0, name: "Sasmitha" };
     setUsers([newUser, ...users]);
 
-    ApiClient.post("/users" + newUser)
+    UserService.createUser(newUser)
       .then(({ data: savedUser }) => setUsers([savedUser, ...users]))
       .catch((err) => {
         setError(err.message);
@@ -63,7 +53,7 @@ const App = () => {
     const updatedUser = { ...user, name: user.name + "!" };
     setUsers(users.map((u) => (u.id === user.id ? updatedUser : u)));
 
-    ApiClient.patch("/users/" + user.id, updateUser).catch((err) => {
+    UserService.updateUser(updatedUser).catch((err) => {
       setError(err.message);
       setUsers(originalUsers);
     });
